@@ -1,0 +1,40 @@
+dependencies:
+  pre:
+    # Retrieve our secrets from the CircleCI environment
+    - echo $SERVICE_ACCOUNT_KEY | base64 --decode > ${HOME}/client-secret.json
+    # authenticate gcloud
+    - gcloud auth activate-service-account --key-file ${HOME}/client-secret.json
+    # Replace <your-project-id>
+    - gcloud config set project $GCLOUD_PROJECT
+  override:
+    - yarn
+
+machine:
+  environment:
+    # For yarn
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+
+    LOGGER_LEVEL: silly
+    NODE_ENV: test
+
+    # Set your GCLOUD_PROJECT env variable below.
+    GCLOUD_PROJECT: <your-project-id>
+
+  node:
+    version: "8.4.0"
+
+  timezone: America/Los_Angeles
+
+test:
+  override:
+    - yarn test
+
+deployment:
+  staging:
+    branch: staging
+    commands:
+      - yarn deploy staging
+  production:
+    branch: master
+    commands:
+      - yarn deploy production
