@@ -1,16 +1,20 @@
 {
-  "name": "push-release-note",
-  "license": "UNLICENSED",
-  "version": "0.0.1",
+  "name": "@invisible/release-note",
+  "license": "MIT",
+  "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "^8.4.0"
+    "node": "^8.5.0"
   },
   "homepage": "",
   "author": {
     "email": "tng@invisible.email",
     "name": "Invisible Technologies",
     "url": "https://github.com/invisible-tech"
+  },
+  "bin": {
+    "push-release-note": "src/push-release-note.js",
+    "assert-release-note": "src/assert-release-note.js"
   },
   "files": [
     "src"
@@ -37,9 +41,9 @@
     "recursive-readdir": "^2.1.1",
     "sinon": "^2.2.0",
     "sinon-express-mock": "^1.2.4",
-    "yarn": "^0.23.4"
+    "yarn": "^0.27.5"
   },
-  "repository": "git@github.com:invisible-tech/push-release-note.git",
+  "repository": "git@github.com:invisible-tech/release-note.git",
   "scripts": {
     "builddoc": "./node_modules/.bin/jsdoc -c ./.jsdoc.json",
     "coverage": "nyc report --reporter=lcov --reporter=html --reporter=text-summary --reporter=text",
@@ -50,15 +54,12 @@
     "prestart": "./node_modules/.bin/sync",
     "start": "node src",
     "pretest": "yarn run lint",
-    "test": "yarn run test-only",
-    "test-only": "NODE_ENV=test nyc mocha test/helpers/loadMocks.js $(find test -name '*.spec.js')"
+    "test": "yarn run lint"
   },
   "dependencies": {
-    "@invisible/deploy": "^1.0.9",
-    "@invisible/logger": "^0.0.3",
-    "avow": "^3.0.1",
     "common-tags": "^1.4.0",
-    "dotenv": "^4.0.0",
+    "emoji-parser": "^0.1.2",
+    "execa": "^0.8.0",
     "lodash": "^4.17.4"
   }
 }

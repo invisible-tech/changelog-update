@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # push-release-note
+=======
+# @invisible/release-note
+>>>>>>> 8d73f04... refact: package name to @invisible/release-note
 
 # Setup
 
@@ -11,10 +15,15 @@
 
 1. Make sure you have the `gcloud` SDK installed: https://cloud.google.com/sdk/
 
-On MacOS:
-```bash
-brew tap caskroom/cask
-brew cask install google-cloud-sdk
+This function publishes the release note to Slack when the Pull Request get merged into master.
+
+# Install
+
+- Install the package as devDependency:  
+```sh
+yarn add -D @invisible/release-note
+# or
+npm install -D @invisible/release-note
 ```
 
 2. If this is your first time running the `gcloud` cli, you will have to OAuth your account.
