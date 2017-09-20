@@ -1,5 +1,5 @@
 'use strict'
 
-const logger = require('@invisible/logger')
+/* eslint no-console: 0 */
 
-logger.info('Hello')
+console.log('You dont need to require this package, read README file.')
