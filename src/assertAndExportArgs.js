@@ -36,11 +36,11 @@ if (slackbotName === '<your-slackbot-name>') logAndExit('<your-slackbot-name>')
 if (iconEmoji === '<your-slackbot-emoji OR slack-emoji>') logAndExit('<your-slackbot-emoji OR slack-emoji>')
 
 const iconEmojiLower = toLower(iconEmoji)
-const splitAndReplaceColons = str => flow(
+const splitAndReplaceColons = flow(
   split(':'),
   compact,
   head
-)(str)
+)
 const newIconEmoji = iconEmoji.includes(':') ? splitAndReplaceColons(iconEmojiLower) : iconEmojiLower
 
 if (! includes(newIconEmoji)(EMOJI_LIST)) console.log('release-note: you are using a custom emoji')
