@@ -40,8 +40,7 @@
     "nyc": "^10.3.0",
     "recursive-readdir": "^2.1.1",
     "sinon": "^2.2.0",
-    "sinon-express-mock": "^1.2.4",
-    "yarn": "^0.27.5"
+    "sinon-express-mock": "^1.2.4"
   },
   "repository": "git@github.com:invisible-tech/release-note.git",
   "scripts": {
@@ -50,8 +49,8 @@
     "lint": "eslint --cache -f node_modules/eslint-formatter-pretty --ignore-path .gitignore .",
     "prepublish": "nsp check",
     "start": "node src",
-    "pretest": "yarn run lint",
-    "test": "yarn run lint"
+    "pretest": "npm run lint",
+    "test": "npm run lint"
   },
   "dependencies": {
     "common-tags": "^1.4.0",
