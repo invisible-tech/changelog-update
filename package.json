@@ -49,7 +49,6 @@
     "coverage": "nyc report --reporter=lcov --reporter=html --reporter=text-summary --reporter=text",
     "lint": "eslint --cache -f node_modules/eslint-formatter-pretty --ignore-path .gitignore .",
     "prepublish": "nsp check",
-    "prestart": "./node_modules/.bin/sync",
     "start": "node src",
     "pretest": "yarn run lint",
     "test": "yarn run lint"
