@@ -4,9 +4,8 @@
 
 /* eslint no-console: 0 */
 
-require('dotenv').config()
 const https = require('https')
-const { spawnSync } = require('child_process')
+const execa = require('execa')
 const {
   filter,
   flow,
@@ -20,29 +19,19 @@ const {
   trimCharsStart,
 } = require('lodash/fp')
 
-const { WEBHOOK_PATH } = process.env
+const {
+  slackbotName,
+  iconEmoji,
+} = require('./assertAndExportArgs.js')
 
-if (! WEBHOOK_PATH) {
+const { CHANGELOG_WEBHOOK_URL } = process.env
+
+if (! CHANGELOG_WEBHOOK_URL) {
   console.log('WARNING: Required env var WEBHOOK_PATH is missing. Skipping for now.')
-  process.exit()
+  process.exit(1)
 }
 
-const execSafe = fullCmd => {
-  const [cmd, ...args] = split(' ', fullCmd)
-  return spawnSync(cmd, args, { stdio: null, encoding: 'utf8' })
-}
-
-const exec = cmd => {
-  const output = execSafe(cmd)
-  const { status, stderr } = output
-  if (status !== 0) {
-    console.log(stderr)
-    process.exit(status)
-  }
-  return output
-}
-
-const { stdout: log } = exec('git --no-pager log --merges -2 --minimal --unified=0')
+const { stdout: log } = execa.sync('git', ['--no-pager', 'log', '--merges', '-2', '--minimal', '--unified=0'])
 const splitLines = split('\n')
 const getLastMergeHash = flow(
   splitLines,
@@ -53,7 +42,7 @@ const getLastMergeHash = flow(
 )
 const lastMergeHash = getLastMergeHash(log)
 
-const { stdout: diff } = exec(`git --no-pager diff ${lastMergeHash}..HEAD --minimal --unified=0 --no-color -- CHANGELOG.md`)
+const { stdout: diff } = execa.sync('git', ['--no-pager', 'diff', `${lastMergeHash}..HEAD`, '--minimal', '--unified=0', '--no-color', '--', 'CHANGELOG.md'])
 const getAdditions = flow(
   split('\n'),
   filter(overEvery([
@@ -64,11 +53,12 @@ const getAdditions = flow(
   join('\n')
 )
 const text = getAdditions(diff)
+
 const payload = JSON.stringify({
   channel: '#inb-tng-changelog',
-  username: 'Gear',
+  username: slackbotName,
   text,
-  icon_emoji: ':gear:',
+  icon_emoji: iconEmoji,
 })
 const options = {
   headers: {
@@ -77,7 +67,7 @@ const options = {
   },
   hostname: 'hooks.slack.com',
   method: 'POST',
-  path: WEBHOOK_PATH,
+  path: CHANGELOG_WEBHOOK_URL,
 }
 const req = https.request(options, res => {
   if (res.statusCode !== 200) {

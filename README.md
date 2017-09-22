@@ -1,37 +1,76 @@
-# push-release-note
+# @invisible/release-note
 
-# Setup
+Provides two helper functions to publish release notes.
 
-1. Create a new project in Google App Engine (https://console.developers.google.com/projectcreate) and name it `push-release-note-staging`
-2. Create a bucket called `envvars.push-release-note-staging.invisible.email` (https://console.cloud.google.com/storage/browser then select the project you just created)
-3. Upload a `.env` file to that bucket
-4. Repeat steps 1-3 above with a project called `push-release-note-production`
+## assert-release-note
 
-# Deployment
+Asserts if there is a release note in the current Pull Request.
 
-1. Make sure you have the `gcloud` SDK installed: https://cloud.google.com/sdk/
+## push-release-note
 
-On MacOS:
-```bash
-brew tap caskroom/cask
-brew cask install google-cloud-sdk
+Pushes the release note to Slack.
+
+# Install
+
+- Install the package as devDependency:  
+```sh
+yarn add -D @invisible/release-note
+# or
+npm install -D @invisible/release-note
 ```
 
-2. If this is your first time running the `gcloud` cli, you will have to OAuth your account.
+# Usage
 
-```bash
-gcloud auth login
+## assert-release-note
+1. Append `assert-release-note` to `posttest` on `scripts` section of your `package.json`.
+```json
+  // It would look something like this:
+  "scripts": {
+    "posttest": "assert-release-note"
+  }
 ```
 
-3. Now you can run the following to deploy
+## push-release-note
+1. Add to the `deployment` section of your project `circle.yml` file the following:  
+`- push-release-note`
 
-```bash
-yarn run deploy-staging
-yarn run deploy-production
-
-# Or
-
-npm run deploy-staging
-npm run deploy-production
-
+```yaml
+# Your circle.yml should look like the below:
+deployment:
+  production:
+    branch: master
+    commands:
+      - push-release-note
 ```
+
+2. Add to your project `package.json` the following:
+
+```JSON
+  "release-note": {
+    "slackbot-name": "<your-slackbot-name>",
+    "icon-emoji": "<your-slackbot-emoji OR slack-emoji>"
+  }
+```
+
+3. Add `CHANGELOG_WEBHOOK_URL` environmental variable to your project on circleCI.
+    
+    If you already have a `CHANGELOG_WEBHOOK_URL`, you need to:
+
+    - Go to `https://circleci.com/gh/invisible-tech/<your-project-name>/edit#env-vars` (replace \<your-project-name\>, e.g. gear)
+    - Click on `Import Variable(s)`.
+    - Select `CHANGELOG_WEBHOOK_URL`.
+      - If you don't have permission to do that, ask your superior to do it!
+    
+    Otherwise:
+
+    - Go to your [Slack Webhook Page](https://my.slack.com/services/new/incoming-webhook/).
+    - Create or select the channel you want to add a webhook.
+    - Click on `Add Incoming Webhooks Integration`
+    - Copy the Webhook URL.
+    - Go to `https://circleci.com/gh/invisible-tech/<your-project-name>/edit#env-vars` (replace \<your-project-name\>, e.g. gear)
+    - Click on `Add Variable`.
+    - Insert CHANGELOG\_WEBHOOK\_URL on `Name` field.
+    - Paste the Webhook URL on `Value` field.
+    - Click on `Add Variable`
+
+* For more information, go to [Slack API Weebhook Page](https://api.slack.com/incoming-webhooks).
