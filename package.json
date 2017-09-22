@@ -1,12 +1,12 @@
 {
   "name": "@invisible/release-note",
   "license": "MIT",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Publish Release Notes to Slack seamlessly",
   "engines": {
     "node": "^8.5.0"
   },
-  "homepage": "",
+  "homepage": "https://github.com/invisible-tech/release-note",
   "author": {
     "email": "tng@invisible.email",
     "name": "Invisible Technologies",
@@ -20,7 +20,12 @@
     "src"
   ],
   "main": "src/index.js",
-  "keywords": [],
+  "keywords": [
+    "slack",
+    "release",
+    "note",
+    "notes"
+  ],
   "devDependencies": {
     "chance": "^1.0.6",
     "docdash": "^0.4.0",
@@ -40,21 +45,17 @@
     "nyc": "^10.3.0",
     "recursive-readdir": "^2.1.1",
     "sinon": "^2.2.0",
-    "sinon-express-mock": "^1.2.4",
-    "yarn": "^0.27.5"
+    "sinon-express-mock": "^1.2.4"
   },
   "repository": "git@github.com:invisible-tech/release-note.git",
   "scripts": {
     "builddoc": "./node_modules/.bin/jsdoc -c ./.jsdoc.json",
     "coverage": "nyc report --reporter=lcov --reporter=html --reporter=text-summary --reporter=text",
-    "fix": "eslint --cache --fix scripts src test",
-    "lint": "eslint --cache -f node_modules/eslint-formatter-pretty scripts src test",
-    "postinstall": "scripts/postinstall.sh",
+    "lint": "eslint --cache -f node_modules/eslint-formatter-pretty --ignore-path .gitignore .",
     "prepublish": "nsp check",
-    "prestart": "./node_modules/.bin/sync",
     "start": "node src",
-    "pretest": "yarn run lint",
-    "test": "yarn run lint"
+    "pretest": "npm run lint",
+    "test": "exit 0"
   },
   "dependencies": {
     "common-tags": "^1.4.0",
