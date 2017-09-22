@@ -1,7 +1,7 @@
 {
   "name": "@invisible/release-note",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "engines": {
     "node": "^8.5.0"
@@ -47,9 +47,8 @@
   "scripts": {
     "builddoc": "./node_modules/.bin/jsdoc -c ./.jsdoc.json",
     "coverage": "nyc report --reporter=lcov --reporter=html --reporter=text-summary --reporter=text",
-    "fix": "eslint --cache --fix scripts src test",
-    "lint": "eslint --cache -f node_modules/eslint-formatter-pretty scripts src test",
-    "postinstall": "scripts/postinstall.sh",
+    "fix": "eslint --cache --fix src test",
+    "lint": "eslint --cache -f node_modules/eslint-formatter-pretty src test",
     "prepublish": "nsp check",
     "prestart": "./node_modules/.bin/sync",
     "start": "node src",
