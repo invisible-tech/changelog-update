@@ -2,11 +2,11 @@
   "name": "@invisible/release-note",
   "license": "MIT",
   "version": "1.0.1",
-  "description": "",
+  "description": "Publish Release Notes to Slack seamlessly",
   "engines": {
     "node": "^8.5.0"
   },
-  "homepage": "",
+  "homepage": "https://github.com/invisible-tech/release-note",
   "author": {
     "email": "tng@invisible.email",
     "name": "Invisible Technologies",
@@ -20,7 +20,12 @@
     "src"
   ],
   "main": "src/index.js",
-  "keywords": [],
+  "keywords": [
+    "slack",
+    "release",
+    "note",
+    "notes"
+  ],
   "devDependencies": {
     "chance": "^1.0.6",
     "docdash": "^0.4.0",
