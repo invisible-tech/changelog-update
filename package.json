@@ -1,7 +1,7 @@
 {
   "name": "@invisible/release-note",
   "license": "MIT",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Publish Release Notes to Slack seamlessly",
   "engines": {
     "node": "^8.5.0"
@@ -54,6 +54,7 @@
     "common-tags": "^1.4.0",
     "emoji-parser": "^0.1.2",
     "execa": "^0.8.0",
+    "got": "^7.1.0",
     "lodash": "^4.17.4"
   }
 }
