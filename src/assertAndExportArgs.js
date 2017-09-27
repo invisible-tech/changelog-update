@@ -22,18 +22,11 @@ const {
 } = releaseNote
 
 const logWarningAndExit = arg => {
-  console.log(`WARNING: ${arg} argument is missing.`)
+  console.log(`ERROR: Key missing: package.json.release-note.${arg}`)
   process.exit(1)
 }
-if (! slackbotName) logWarningAndExit('slackbot name')
-if (! iconEmoji) logWarningAndExit('icon emoji')
-
-const logAndExit = arg => {
-  console.log(`WARNING: set ${arg} on your project package.json!`)
-  process.exit(1)
-}
-if (slackbotName === '<your-slackbot-name>') logAndExit('<your-slackbot-name>')
-if (iconEmoji === '<your-slackbot-emoji OR slack-emoji>') logAndExit('<your-slackbot-emoji OR slack-emoji>')
+if (! slackbotName) logWarningAndExit('slackbot-name')
+if (! iconEmoji) logWarningAndExit('icon-emoji')
 
 const iconEmojiLower = toLower(iconEmoji)
 const splitAndReplaceColons = flow(
