@@ -13,7 +13,7 @@ const {
 } = require('lodash/fp')
 
 const pathConsumerPackage = path.join(process.cwd(), 'package.json')
-const { 'release-note': releaseNote } = require(pathConsumerPackage)
+const { 'release-note': releaseNote = {} } = require(pathConsumerPackage)
 const { EMOJI_LIST } = require('./constants')
 
 const {
