@@ -81,8 +81,6 @@ got(CHANGELOG_WEBHOOK_URL, options)
     return undefined
   })
   .catch(err => {
-    if (err) {
-      console.log(err)
-      process.exit(1)
-    }
+    console.log(err)
+    process.exit(1)
   })
