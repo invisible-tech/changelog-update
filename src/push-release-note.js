@@ -4,8 +4,8 @@
 
 /* eslint no-console: 0 */
 
-const https = require('https')
 const execa = require('execa')
+const got = require('got')
 const {
   filter,
   flow,
@@ -27,7 +27,7 @@ const {
 const { CHANGELOG_WEBHOOK_URL } = process.env
 
 if (! CHANGELOG_WEBHOOK_URL) {
-  console.log('WARNING: Required env var WEBHOOK_PATH is missing. Skipping for now.')
+  console.log('WARNING: Required env var CHANGELOG_WEBHOOK_URL is missing. Skipping for now.')
   process.exit(1)
 }
 
@@ -65,22 +65,22 @@ const options = {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Content-Length': Buffer.byteLength(payload),
   },
-  hostname: 'hooks.slack.com',
   method: 'POST',
-  path: CHANGELOG_WEBHOOK_URL,
+  body: payload,
 }
-const req = https.request(options, res => {
-  if (res.statusCode !== 200) {
-    console.log(`OPTIONS: ${JSON.stringify(options, undefined, 2)}`)
-    console.log(`PAYLOAD: ${payload}`)
-    console.log(`STATUS: ${res.statusCode}`)
-    console.log(`HEADERS: ${JSON.stringify(res.headers, undefined, 2)}`)
+
+got(CHANGELOG_WEBHOOK_URL, options)
+  .then(res => {
+    if (res.statusCode !== 200) {
+      console.log(`OPTIONS: ${JSON.stringify(options, undefined, 2)}`)
+      console.log(`PAYLOAD: ${payload}`)
+      console.log(`STATUS: ${res.statusCode}`)
+      console.log(`HEADERS: ${JSON.stringify(res.headers, undefined, 2)}`)
+      process.exit(1)
+    }
+    return undefined
+  })
+  .catch(err => {
+    console.log(err)
     process.exit(1)
-  }
-})
-req.on('error', e => {
-  console.error(`problem with request: ${e.message}`)
-  process.exit(1)
-})
-req.write(payload)
-req.end()
+  })
