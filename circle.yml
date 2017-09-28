@@ -15,3 +15,9 @@ machine:
 test:
   override:
     - yarn test
+
+deployment:
+  release:
+    branch: master
+    commands:
+      - ./node_modules/.bin/publish
