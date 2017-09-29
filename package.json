@@ -1,7 +1,7 @@
 {
   "name": "@invisible/release-note",
   "license": "MIT",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Publish Release Notes to Slack seamlessly",
   "engines": {
     "node": "^8.5.0"
@@ -28,6 +28,7 @@
   ],
   "devDependencies": {
     "@invisible/eslint-config": "^1.0.0",
+    "@invisible/publish": "^1.1.6",
     "chance": "^1.0.6",
     "docdash": "^0.4.0",
     "eslint": "^4.7.2",
@@ -45,10 +46,10 @@
     "builddoc": "./node_modules/.bin/jsdoc -c ./.jsdoc.json",
     "coverage": "nyc report --reporter=lcov --reporter=html --reporter=text-summary --reporter=text",
     "lint": "eslint --cache -f node_modules/eslint-formatter-pretty --ignore-path .gitignore .",
-    "prepublish": "nsp check",
     "start": "node src",
     "pretest": "npm run lint",
-    "test": "exit 0"
+    "test": "exit 0",
+    "posttest": "assert-version-bump && nsp check"
   },
   "dependencies": {
     "common-tags": "^1.4.0",
