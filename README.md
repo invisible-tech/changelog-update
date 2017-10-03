@@ -1,5 +1,7 @@
 # @invisible/release-note
 
+[![CircleCI](https://circleci.com/gh/invisible-tech/release-note/tree/master.svg?style=svg)](https://circleci.com/gh/invisible-tech/release-note/tree/master)
+
 Provides two helper functions to publish release notes.
 
 ## assert-release-note
