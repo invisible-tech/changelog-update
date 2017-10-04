@@ -1,0 +1,52 @@
+#!/usr/bin/env node
+
+'use strict'
+
+const finder = require('find-package-json')
+const { get } = require('lodash/fp')
+const { stripIndents } = require('common-tags')
+
+const pushReleaseNote = require('../src/pushReleaseNote')
+const {
+  CHANGELOG_FILE,
+  ICON_EMOJI,
+  SLACKBOT_NAME,
+} = require('../src/constants')
+
+const pkg = finder().next().value || {}
+const {
+  releaseNote: {
+    changelogFile = CHANGELOG_FILE,
+    iconEmoji = ICON_EMOJI,
+  } = {},
+} = pkg
+
+const slackbotName = get('releaseNote.slackbotName')(pkg) ||
+  get('name')(pkg) ||
+  SLACKBOT_NAME
+
+try {
+  const dotenv = require('dotenv')
+  dotenv.config()
+} catch (err) {
+  // dotenv is optional dependency, don't throw if it's not installed
+}
+
+const { CHANGELOG_WEBHOOK_URL: webhookUrl } = process.env
+if (! webhookUrl) {
+  console.log('release-note: Required env var CHANGELOG_WEBHOOK_URL is missing. Skipping for now.')
+  process.exit(1)
+}
+
+pushReleaseNote({ webhookUrl, changelogFile, iconEmoji, slackbotName }).then(
+  res => console.log(
+    stripIndents`
+      release-note:
+      STATUS: ${res.statusCode}
+      HEADERS: ${JSON.stringify(res.headers)}
+    `
+  )
+).catch(err => {
+  console.error(err)
+  process.exit(1)
+})

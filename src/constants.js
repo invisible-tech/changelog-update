@@ -1,7 +1,11 @@
 'use strict'
 
-const emojiParser = require('emoji-parser')
+const CHANGELOG_FILE = 'CHANGELOG.md'
+const ICON_EMOJI = ':robot_face:'
+const SLACKBOT_NAME = 'Changelog'
 
-const EMOJI_LIST = emojiParser.list()
-
-module.exports = { EMOJI_LIST }
+module.exports = {
+  CHANGELOG_FILE,
+  ICON_EMOJI,
+  SLACKBOT_NAME,
+}

@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+'use strict'
+
+const finder = require('find-package-json')
+const { get } = require('lodash/fp')
+
+const assertReleaseNote = require('../src/assertReleaseNote')
+const { CHANGELOG_FILE } = require('../src/constants')
+
+const pkg = finder().next().value || {}
+
+const changelogFile = get('releaseNote.changelogFile')(pkg) || CHANGELOG_FILE
+
+assertReleaseNote({ changelogFile })
