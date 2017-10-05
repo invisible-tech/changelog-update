@@ -4,19 +4,19 @@
 
 Provides three helper methods to publish the latest additions to your changelog.
 
-## `assert-changelog-update`
+1. `assert-changelog-update`
 
-Asserts if there is an addition to your changelog in the current, unmerged branch.
+    Asserts if there is an addition to your changelog in the current, unmerged branch.
 
-## `push-changelog-update`
+2. `push-changelog-update`
 
-Pushes the changelog additions to Slack (more adapters will be added in the future).
+    Pushes the changelog additions to Slack (more adapters will be added in the future).
 
-## `last-changelog-update`
+3. `last-changelog-update`
 
-Logs the latest changelog additions to stdout. If you are on `master`, looks at the diff from two merges ago. If you are not on `master`, looks at the diff between `master` and `HEAD`
+    Logs the latest changelog additions to stdout. If you are on `master`, looks at the diff from two merges ago. If you are not on `master`, looks at the diff between `master` and `HEAD`
 
-# Install
+## Install
 
 1. Install the package as devDependency:
 ```sh
@@ -27,9 +27,9 @@ npm install -D @invisible/changelog-update
 
 2. If you wish to use `push-changelog-update`, set up a [Slack Webhook](https://my.slack.com/services/new/incoming-webhook/). NOTE: Slack will reject mutliple `POST`'s to the same webhook that have identical messages, so you might run into this while testing.
 
-# Usage
+## Usage
 
-## Programmatically
+### Programmatically
 
 ```javascript
   'use strict'
@@ -61,9 +61,9 @@ npm install -D @invisible/changelog-update
   console.log(notes) // or do something cool with it
 ```
 
-## Hook scripts
+### Hook scripts
 
-### `assert-changelog-update`
+#### `assert-changelog-update`
 1. Append `assert-changelog-update` to `posttest` on `scripts` section of your `package.json`.
 ```json
   // It would look something like this:
@@ -78,36 +78,40 @@ $ assert-changelog-update # will output the change if found
 $ assert-changelog-update --quiet # will silently succeed, but output error if not found
 ```
 
-### `push-changelog-update`
-1. Add to the `deployment` section of your project `circle.yml` file the following:
-`- push-changelog-update`
+#### `push-changelog-update`
+1. If using Circle CI, add `push-changelog-update` to the `deployment` section of your project `circle.yml`.
 
-```yaml
-# Your circle.yml should look like the below:
-deployment:
-  production:
-    branch: master
-    commands:
-      - push-changelog-update
-```
+    `- push-changelog-update`
 
-You can also run it at any time from your CLI.
-```
-$ push-changelog-update
-```
+    ```yaml
+      # ...
+      deployment:
+        production:
+          branch: master
+          commands:
+            - push-changelog-update
+    ```
 
-2. Optional: set a name for your slack bot and an icon emoji in your `package.json`
+    Add the `CHANGELOG_WEBHOOK_URL` env variable to your project too.
+    This package will optionally load `dotenv` if it's present, so you may add this to your `.env` file as well.
 
-```JSON
-  "ChangelogUpdate": {
-    "slackbotName": "Changelog Robot",
-    "iconEmoji": "joy",
-    "changelogFile: "CHANGELOG" // defaults to CHANGELOG.md
-  }
-```
+    You can also run it at any time from your CLI.
 
-3. If using Circle CI, add the `CHANGELOG_WEBHOOK_URL` variable to your project. This package will optionally load `dotenv` if it's present, so you may add this to your `.env` file as well.
+    ```
+    $ push-changelog-update
+    ```
 
-## TODO
+2. Optional: set a name for your slack bot and an icon emoji in your [`package.json`](package.json)
+
+    ```JSON
+      "changelogUpdate": {
+        "slackbotName": "Changelog Robot", // defaults to project name
+        "iconEmoji": "joy", // defaults to :robot_face:
+        "changelogFile: "CHANGELOG" // defaults to CHANGELOG.md
+      }
+    ```
+
+
+### TODO
 - Unit Tests
 - Testing on multiple platforms
