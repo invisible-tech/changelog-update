@@ -52,7 +52,6 @@ const lastMergeHash = () => {
 const changelogCommitHash = () =>
   (currentBranch() === MASTER ? lastMergeHash() : MASTER)
 
-
 const lastChangelogUpdate = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}) => {
   const { stdout: diff } = spawn.sync(
     'git',

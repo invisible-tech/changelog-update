@@ -74,7 +74,8 @@ npm install -D @invisible/changelog-update
 
 You can also run it at any time from your CLI.
 ```
-$ assert-changelog-update
+$ assert-changelog-update # will output the change if found
+$ assert-changelog-update --quiet # will silently succeed, but output error if not found
 ```
 
 ### `push-changelog-update`
@@ -100,7 +101,8 @@ $ push-changelog-update
 ```JSON
   "ChangelogUpdate": {
     "slackbotName": "Changelog Robot",
-    "iconEmoji": "joy"
+    "iconEmoji": "joy",
+    "changelogFile: "CHANGELOG" // defaults to CHANGELOG.md
   }
 ```
 

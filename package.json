@@ -1,7 +1,7 @@
 {
   "name": "@invisible/changelog-update",
   "license": "MIT",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Ensure updates to your changelog, and push them to Slack seamlessly",
   "engines": {
     "node": "^8.5.0"
@@ -48,7 +48,7 @@
     "prepublishOnly": "nsp check",
     "pretest": "yarn run lint",
     "test": "exit 0",
-    "posttest": "assert-version-bump && bin/assert-changelog-update"
+    "posttest": "assert-version-bump && bin/assert-changelog-update --quiet"
   },
   "dependencies": {
     "common-tags": "^1.4.0",
