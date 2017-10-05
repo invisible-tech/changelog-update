@@ -9,7 +9,7 @@ const {
   last,
   split,
   toLower,
-  trimCharacters,
+  trimChars,
 } = require('lodash/fp')
 
 const { getLastChangelogAdditions } = require('./helpers')
@@ -43,7 +43,7 @@ const postToWebhook = async ({ payload, webhookUrl }) => {
   return got(webhookUrl, options)
 }
 
-const normalizeEmoji = str => `:${trimCharacters(':')(toLower(str))}:`
+const normalizeEmoji = str => `:${trimChars(':')(toLower(str))}:`
 
 const run = async ({
   changelogFile = CHANGELOG_FILE,
