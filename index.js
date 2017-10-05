@@ -1,6 +1,6 @@
 'use strict'
 
 module.exports = {
-  assertReleaseNote: require('./src/assertReleaseNote'),
-  pushReleaseNote: require('./src/pushReleaseNote'),
+  assertChangelogUpdate: require('./src/assertChangelogUpdate'),
+  pushChangelogUpdate: require('./src/pushChangelogUpdate'),
 }

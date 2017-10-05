@@ -52,7 +52,8 @@ const lastMergeHash = () => {
 const changelogCommitHash = () =>
   (currentBranch() === MASTER ? lastMergeHash() : MASTER)
 
-const lastChangelogAdditions = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}) => {
+
+const lastChangelogUpdate = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}) => {
   const { stdout: diff } = spawn.sync(
     'git',
     [
@@ -67,10 +68,9 @@ const lastChangelogAdditions = ({ changelogFile = CHANGELOG_FILE, commitHash } =
     ],
     { encoding: 'utf8' }
   )
-
   return getAdditions(diff)
 }
 
 module.exports = {
-  lastChangelogAdditions,
+  lastChangelogUpdate,
 }

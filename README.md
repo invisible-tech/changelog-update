@@ -1,18 +1,18 @@
-# @invisible/release-note
+# @invisible/changelog-update
 
-[![CircleCI](https://circleci.com/gh/invisible-tech/release-note/tree/master.svg?style=svg)](https://circleci.com/gh/invisible-tech/release-note/tree/master)
+[![CircleCI](https://circleci.com/gh/invisible-tech/changelog-update/tree/master.svg?style=svg)](https://circleci.com/gh/invisible-tech/changelog-update/tree/master)
 
 Provides three helper methods to publish the latest additions to your changelog.
 
-## `assert-release-note`
+## `assert-changelog-update`
 
-Asserts if there is an addition to your changelog in the current Pull Request.
+Asserts if there is an addition to your changelog in the current, unmerged branch.
 
-## `push-release-note`
+## `push-changelog-update`
 
 Pushes the changelog additions to Slack (more adapters will be added in the future).
 
-## `last-changelog-additions`
+## `last-changelog-update`
 
 Logs the latest changelog additions to stdout. If you are on `master`, looks at the diff from two merges ago. If you are not on `master`, looks at the diff between `master` and `HEAD`
 
@@ -20,12 +20,12 @@ Logs the latest changelog additions to stdout. If you are on `master`, looks at 
 
 1. Install the package as devDependency:
 ```sh
-yarn add -D @invisible/release-note
+yarn add -D @invisible/changelog-update
 # or
-npm install -D @invisible/release-note
+npm install -D @invisible/changelog-update
 ```
 
-2. If you wish to use the `push-release-note` method, set up a [Slack Webhook](https://my.slack.com/services/new/incoming-webhook/). NOTE: Slack will reject mutliple `POST`'s to the same webhook that have identical messages, so you might run into this while testing.
+2. If you wish to use `push-changelog-update`, set up a [Slack Webhook](https://my.slack.com/services/new/incoming-webhook/). NOTE: Slack will reject mutliple `POST`'s to the same webhook that have identical messages, so you might run into this while testing.
 
 # Usage
 
@@ -35,50 +35,51 @@ npm install -D @invisible/release-note
   'use strict'
 
   const {
-    assertReleaseNote,
-    lastChangelogAdditions,
-    pushReleaseNote,
-  } = require('@invisible/release-note')
+    assertChangelogUpdate,
+    lastChangelogUpdate,
+    pushChangelogUpdate,
+  } = require('@invisible/changelog-update')
+
 
   // changelogFile defaults to CHANGELOG.md if no argument given
   // This method will throw if no addition has been made to your changelogFile since
   // the last merge commit
-  assertReleaseNote({ changelogFile: 'CHANGELOG.txt' })
+  assertChangelogUpdate({ changelogFile: 'CHANGELOG.txt' })
 
   const webhookUrl = process.env.CHANGELOG_WEBHOOK_URL
 
   // This method is async so it returns a promise that resolves the Response object from POST'ing to the Slack webhook
-  pushReleaseNote({
+  pushChangelogUpdate({
     changelogFile: 'CHANGELOG.txt', // defaults to CHANGELOG.md
     iconEmoji: 'joy', // defaults to :robot_face:
     slackbotName: 'Cool Bot Name' , // defaults to Changelog
     webhookUrl,
   }).then(console.log).catch(console.error)
 
-  const notes = lastChangelogAdditions()
+  const notes = lastChangelogUpdate()
 
   console.log(notes) // or do something cool with it
 ```
 
 ## Hook scripts
 
-### `assert-release-note`
-1. Append `assert-release-note` to `posttest` on `scripts` section of your `package.json`.
+### `assert-changelog-update`
+1. Append `assert-changelog-update` to `posttest` on `scripts` section of your `package.json`.
 ```json
   // It would look something like this:
   "scripts": {
-    "posttest": "assert-release-note"
+    "posttest": "assert-changelog-update"
   }
 ```
 
 You can also run it at any time from your CLI.
 ```
-$ assert-release-note
+$ assert-changelog-update
 ```
 
-### `push-release-note`
+### `push-changelog-update`
 1. Add to the `deployment` section of your project `circle.yml` file the following:
-`- push-release-note`
+`- push-changelog-update`
 
 ```yaml
 # Your circle.yml should look like the below:
@@ -86,18 +87,18 @@ deployment:
   production:
     branch: master
     commands:
-      - push-release-note
+      - push-changelog-update
 ```
 
 You can also run it at any time from your CLI.
 ```
-$ push-release-note
+$ push-changelog-update
 ```
 
 2. Optional: set a name for your slack bot and an icon emoji in your `package.json`
 
 ```JSON
-  "releaseNote": {
+  "ChangelogUpdate": {
     "slackbotName": "Changelog Robot",
     "iconEmoji": "joy"
   }

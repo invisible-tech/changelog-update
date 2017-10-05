@@ -10,8 +10,9 @@ const {
 } = require('lodash/fp')
 
 const {
-  lastChangelogAdditions,
+  lastChangelogUpdate,
 } = require('./helpers')
+
 const {
   CHANGELOG_FILE,
   ICON_EMOJI,
@@ -37,11 +38,9 @@ const run = async ({
   iconEmoji = ICON_EMOJI,
   slackbotName = SLACKBOT_NAME,
   webhookUrl,
-}) => {
-  assert(webhookUrl, 'release-note: no webhook url given')
-  const text = lastChangelogAdditions({
-    changelogFile,
-  })
+} = {}) => {
+  assert(webhookUrl, 'changelog-update: no webhook url given')
+  const text = lastChangelogUpdate({ changelogFile })
   const payload = JSON.stringify({
     icon_emoji: normalizeEmoji(iconEmoji),
     text,
