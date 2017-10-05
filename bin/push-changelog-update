@@ -15,13 +15,13 @@ const {
 
 const pkg = finder().next().value || {}
 const {
-  ChangelogUpdate: {
+  changelogUpdate: {
     changelogFile = CHANGELOG_FILE,
     iconEmoji = ICON_EMOJI,
   } = {},
 } = pkg
 
-const slackbotName = get('ChangelogUpdate.slackbotName')(pkg) ||
+const slackbotName = get('changelogUpdate.slackbotName')(pkg) ||
   get('name')(pkg) ||
   SLACKBOT_NAME
 
