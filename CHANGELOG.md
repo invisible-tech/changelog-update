@@ -1,8 +1,10 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+> All notable changes to this project will be documented in this file.
 
-
+## [1.0.7] - 2017-10-06
+### Added
+  - Commit hash in error message of `assertChangelogUpdate`
 
 ## [1.0.6] - 2017-10-06
 ### Changed
@@ -32,3 +34,4 @@ All notable changes to this project will be documented in this file.
 [1.0.4]: https://github.com/invisible-tech/changelog-update/releases/tag/v1.0.4
 [1.0.5]: https://github.com/invisible-tech/changelog-update/releases/tag/v1.0.5
 [1.0.6]: https://github.com/invisible-tech/changelog-update/releases/tag/v1.0.6
+[1.0.7]: https://github.com/invisible-tech/changelog-update/releases/tag/v1.0.7

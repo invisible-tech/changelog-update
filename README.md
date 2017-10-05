@@ -79,9 +79,9 @@ $ assert-changelog-update --quiet # will silently succeed, but output error if n
 ```
 
 #### `push-changelog-update`
-1. If using Circle CI, add `push-changelog-update` to the `deployment` section of your project `circle.yml`.
+1. See [`circle.yml`](circle.yml) for an example of how to integrate it. Details below:
 
-    `- push-changelog-update`
+If using Circle CI, add `push-changelog-update` to the `deployment` section of your project `circle.yml`.
 
     ```yaml
       # ...
@@ -100,6 +100,18 @@ $ assert-changelog-update --quiet # will silently succeed, but output error if n
     ```
     $ push-changelog-update
     ```
+
+2. To ensure that `assert-changelog-update` is run properly, make your `test` section in `circle.yml` look like this:
+
+    ```yaml
+      test:
+        override:
+          - git checkout -B master origin/master
+          - git checkout $CIRCLE_BRANCH
+          - yarn test
+    ```
+
+   It's necessary to reset `master` to `origin/master` because CircleCI will overwrite your local `master` branch, and `assert-changelog-update` and `push-changelog-update` rely on `master` being equal to `origin/master`
 
 2. Optional: set a name for your slack bot and an icon emoji in your [`package.json`](package.json)
 
