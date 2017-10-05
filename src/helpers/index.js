@@ -5,6 +5,7 @@ const {
   filter,
   flow,
   join,
+  last,
   map,
   negate,
   overEvery,
@@ -15,6 +16,8 @@ const {
 } = require('lodash/fp')
 
 const { CHANGELOG_FILE } = require('../constants')
+
+const MASTER = 'master'
 
 const getAdditions = flow(
   split('\n'),
@@ -27,13 +30,35 @@ const getAdditions = flow(
   trim,
 )
 
-const getLastChangelogAdditions = ({ changelogFile = CHANGELOG_FILE, commitHash = 'master' } = {}) => {
+const currentBranch = () =>
+  spawn.sync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { encoding: 'utf8' }).stdout
+
+const lastMergeHash = () => {
+  const { stdout: mergeHashes } = spawn.sync(
+    'git',
+    [
+      '--no-pager',
+      'log',
+      '--merges',
+      '-2',
+      '--pretty=format:%h',
+    ],
+    { encoding: 'utf8' }
+  )
+
+  return last(split('\n')(mergeHashes))
+}
+
+const changelogCommitHash = () =>
+  (currentBranch() === MASTER ? lastMergeHash() : MASTER)
+
+const lastChangelogAdditions = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}) => {
   const { stdout: diff } = spawn.sync(
     'git',
     [
       '--no-pager',
       'diff',
-      `${commitHash}..HEAD`,
+      `${commitHash || changelogCommitHash()}..HEAD`,
       '--minimal',
       '--unified=0',
       '--no-color',
@@ -47,5 +72,5 @@ const getLastChangelogAdditions = ({ changelogFile = CHANGELOG_FILE, commitHash 
 }
 
 module.exports = {
-  getLastChangelogAdditions,
+  lastChangelogAdditions,
 }

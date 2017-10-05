@@ -1,5 +1,10 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
+
+## [2.1.0] - 2017-10-05
+### Added
+  - New method: `last-changelog-additions` see [README.md](README.md) for more details.
 
 ## [2.0.0] - 2017-10-04
 ### Changed
