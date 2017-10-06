@@ -1,7 +1,7 @@
 {
   "name": "@invisible/release-note",
   "license": "MIT",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "Publish Release Notes to Slack seamlessly",
   "engines": {
     "node": "^8.5.0"
@@ -13,13 +13,10 @@
     "url": "https://github.com/invisible-tech"
   },
   "bin": {
-    "push-release-note": "src/push-release-note.js",
-    "assert-release-note": "src/assert-release-note.js"
+    "push-release-note": "bin/push-release-note",
+    "assert-release-note": "bin/assert-release-note"
   },
-  "files": [
-    "src"
-  ],
-  "main": "src/index.js",
+  "main": "index.js",
   "keywords": [
     "slack",
     "release",
@@ -27,35 +24,39 @@
     "notes"
   ],
   "devDependencies": {
-    "@invisible/eslint-config": "^1.1.3",
-    "@invisible/publish": "^1.1.6",
+    "@invisible/eslint-config": "^1.1.4",
+    "@invisible/publish": "^1.1.8",
     "chance": "^1.0.6",
     "docdash": "^0.4.0",
-    "eslint": "^4.7.2",
+    "eslint": "^4.8.0",
     "jsdoc": "^3.4.3",
     "mocha": "^3.2.0",
     "mock-require": "^2.0.1",
-    "nsp": "^2.6.3",
+    "nsp": "^2.8.1",
     "nyc": "^10.3.0",
     "recursive-readdir": "^2.1.1",
-    "sinon": "^2.2.0",
-    "sinon-express-mock": "^1.2.4"
+    "yarn": "^1"
   },
   "repository": "git@github.com:invisible-tech/release-note.git",
   "scripts": {
     "builddoc": "./node_modules/.bin/jsdoc -c ./.jsdoc.json",
     "coverage": "nyc report --reporter=lcov --reporter=html --reporter=text-summary --reporter=text",
+    "fix": "eslint --cache --fix --ignore-path .gitignore .",
     "lint": "eslint --cache -f node_modules/eslint-formatter-pretty --ignore-path .gitignore .",
     "start": "node src",
-    "pretest": "npm run lint",
+    "prepublish": "nsp check",
+    "pretest": "yarn run lint",
     "test": "exit 0",
-    "posttest": "assert-version-bump && nsp check"
+    "posttest": "assert-version-bump && bin/assert-release-note"
   },
   "dependencies": {
     "common-tags": "^1.4.0",
-    "emoji-parser": "^0.1.2",
-    "execa": "^0.8.0",
+    "cross-spawn": "^5.1.0",
+    "find-package-json": "^1.0.0",
     "got": "^7.1.0",
     "lodash": "^4.17.4"
+  },
+  "optionalDependencies": {
+    "dotenv": "^4.0.0"
   }
 }
