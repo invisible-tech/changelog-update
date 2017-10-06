@@ -4,36 +4,19 @@
 
 const assert = require('assert')
 const got = require('got')
-const spawn = require('cross-spawn')
 const {
-  last,
-  split,
   toLower,
   trimChars,
 } = require('lodash/fp')
 
-const { getLastChangelogAdditions } = require('./helpers')
+const {
+  lastChangelogAdditions,
+} = require('./helpers')
 const {
   CHANGELOG_FILE,
   ICON_EMOJI,
   SLACKBOT_NAME,
 } = require('./constants')
-
-const getLastMergeHash = () => {
-  const { stdout: mergeHashes } = spawn.sync(
-    'git',
-    [
-      '--no-pager',
-      'log',
-      '--merges',
-      '-2',
-      '--pretty=format:%h',
-    ],
-    { encoding: 'utf8' }
-  )
-
-  return last(split('\n')(mergeHashes))
-}
 
 const postToWebhook = async ({ payload, webhookUrl }) => {
   const options = {
@@ -56,9 +39,8 @@ const run = async ({
   webhookUrl,
 }) => {
   assert(webhookUrl, 'release-note: no webhook url given')
-  const text = getLastChangelogAdditions({
+  const text = lastChangelogAdditions({
     changelogFile,
-    commitHash: getLastMergeHash(),
   })
   const payload = JSON.stringify({
     icon_emoji: normalizeEmoji(iconEmoji),

@@ -2,15 +2,19 @@
 
 [![CircleCI](https://circleci.com/gh/invisible-tech/release-note/tree/master.svg?style=svg)](https://circleci.com/gh/invisible-tech/release-note/tree/master)
 
-Provides two helper functions to publish release notes.
+Provides three helper methods to publish the latest additions to your changelog.
 
-## assert-release-note
+## `assert-release-note`
 
-Asserts if there is a release note in the current Pull Request.
+Asserts if there is an addition to your changelog in the current Pull Request.
 
-## push-release-note
+## `push-release-note`
 
-Pushes the release note to Slack.
+Pushes the changelog additions to Slack (more adapters will be added in the future).
+
+## `last-changelog-additions`
+
+Logs the latest changelog additions to stdout. If you are on `master`, looks at the diff from two merges ago. If you are not on `master`, looks at the diff between `master` and `HEAD`
 
 # Install
 
@@ -32,6 +36,7 @@ npm install -D @invisible/release-note
 
   const {
     assertReleaseNote,
+    lastChangelogAdditions,
     pushReleaseNote,
   } = require('@invisible/release-note')
 
@@ -42,7 +47,7 @@ npm install -D @invisible/release-note
 
   const webhookUrl = process.env.CHANGELOG_WEBHOOK_URL
 
-  // This method is async so it returns a promise that resolves the Response object from POST'ing to the webhook
+  // This method is async so it returns a promise that resolves the Response object from POST'ing to the Slack webhook
   pushReleaseNote({
     changelogFile: 'CHANGELOG.txt', // defaults to CHANGELOG.md
     iconEmoji: 'joy', // defaults to :robot_face:
@@ -50,6 +55,9 @@ npm install -D @invisible/release-note
     webhookUrl,
   }).then(console.log).catch(console.error)
 
+  const notes = lastChangelogAdditions()
+
+  console.log(notes) // or do something cool with it
 ```
 
 ## Hook scripts
