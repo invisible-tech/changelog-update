@@ -20,13 +20,17 @@ const {
 } = require('./constants')
 
 const getLastMergeHash = () => {
-  const { stdout: mergeHashes } = spawn.sync('git', [
-    '--no-pager',
-    'log',
-    '--merges',
-    '-2',
-    '--pretty=format:%h',
-  ])
+  const { stdout: mergeHashes } = spawn.sync(
+    'git',
+    [
+      '--no-pager',
+      'log',
+      '--merges',
+      '-2',
+      '--pretty=format:%h',
+    ],
+    { encoding: 'utf8' }
+  )
 
   return last(split('\n')(mergeHashes))
 }

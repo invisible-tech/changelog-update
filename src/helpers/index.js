@@ -28,16 +28,20 @@ const getAdditions = flow(
 )
 
 const getLastChangelogAdditions = ({ changelogFile = CHANGELOG_FILE, commitHash = 'master' } = {}) => {
-  const { stdout: diff } = spawn.sync('git', [
-    '--no-pager',
-    'diff',
-    `${commitHash}..HEAD`,
-    '--minimal',
-    '--unified=0',
-    '--no-color',
-    '--',
-    changelogFile,
-  ])
+  const { stdout: diff } = spawn.sync(
+    'git',
+    [
+      '--no-pager',
+      'diff',
+      `${commitHash}..HEAD`,
+      '--minimal',
+      '--unified=0',
+      '--no-color',
+      '--',
+      changelogFile,
+    ],
+    { encoding: 'utf8' }
+  )
 
   return getAdditions(diff)
 }
