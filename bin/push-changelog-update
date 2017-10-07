@@ -6,7 +6,7 @@ const finder = require('find-package-json')
 const { get } = require('lodash/fp')
 const { stripIndents } = require('common-tags')
 
-const pushReleaseNote = require('../src/pushReleaseNote')
+const pushChangelogUpdate = require('../src/pushChangelogUpdate')
 const {
   CHANGELOG_FILE,
   ICON_EMOJI,
@@ -15,13 +15,13 @@ const {
 
 const pkg = finder().next().value || {}
 const {
-  releaseNote: {
+  ChangelogUpdate: {
     changelogFile = CHANGELOG_FILE,
     iconEmoji = ICON_EMOJI,
   } = {},
 } = pkg
 
-const slackbotName = get('releaseNote.slackbotName')(pkg) ||
+const slackbotName = get('ChangelogUpdate.slackbotName')(pkg) ||
   get('name')(pkg) ||
   SLACKBOT_NAME
 
@@ -34,14 +34,14 @@ try {
 
 const { CHANGELOG_WEBHOOK_URL: webhookUrl } = process.env
 if (! webhookUrl) {
-  console.log('release-note: Required env var CHANGELOG_WEBHOOK_URL is missing. Skipping for now.')
+  console.log('changelog-update: Required env var CHANGELOG_WEBHOOK_URL is missing. Skipping for now.')
   process.exit(1)
 }
 
-pushReleaseNote({ webhookUrl, changelogFile, iconEmoji, slackbotName }).then(
+pushChangelogUpdate({ webhookUrl, changelogFile, iconEmoji, slackbotName }).then(
   res => console.log(
     stripIndents`
-      release-note:
+      changelog-update:
       STATUS: ${res.statusCode}
       HEADERS: ${JSON.stringify(res.headers)}
     `

@@ -5,11 +5,11 @@
 const finder = require('find-package-json')
 const { get } = require('lodash/fp')
 
-const assertReleaseNote = require('../src/assertReleaseNote')
+const assertChangelogUpdate = require('../src/assertChangelogUpdate')
 const { CHANGELOG_FILE } = require('../src/constants')
 
 const pkg = finder().next().value || {}
 
-const changelogFile = get('releaseNote.changelogFile')(pkg) || CHANGELOG_FILE
+const changelogFile = get('ChangelogUpdate.changelogFile')(pkg) || CHANGELOG_FILE
 
-assertReleaseNote({ changelogFile })
+assertChangelogUpdate({ changelogFile })

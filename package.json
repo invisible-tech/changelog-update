@@ -1,21 +1,21 @@
 {
-  "name": "@invisible/release-note",
+  "name": "@invisible/changelog-update",
   "license": "MIT",
-  "version": "2.1.0",
-  "description": "Publish Release Notes to Slack seamlessly",
+  "version": "1.0.4",
+  "description": "Ensure updates to your changelog, and push them to Slack seamlessly",
   "engines": {
     "node": "^8.5.0"
   },
-  "homepage": "https://github.com/invisible-tech/release-note",
+  "homepage": "https://github.com/invisible-tech/changelog-update",
   "author": {
     "email": "tng@invisible.email",
     "name": "Invisible Technologies",
     "url": "https://github.com/invisible-tech"
   },
   "bin": {
-    "assert-release-note": "bin/assert-release-note",
-    "latest-changelog-additions": "bin/latest-changelog-additions",
-    "push-release-note": "bin/push-release-note"
+    "assert-changelog-update": "bin/assert-changelog-update",
+    "last-changelog-update": "bin/last-changelog-update",
+    "push-changelog-update": "bin/push-changelog-update"
   },
   "main": "index.js",
   "keywords": [
@@ -38,17 +38,17 @@
     "recursive-readdir": "^2.1.1",
     "yarn": "^1"
   },
-  "repository": "git@github.com:invisible-tech/release-note.git",
+  "repository": "git@github.com:invisible-tech/changelog-update.git",
   "scripts": {
     "builddoc": "./node_modules/.bin/jsdoc -c ./.jsdoc.json",
     "coverage": "nyc report --reporter=lcov --reporter=html --reporter=text-summary --reporter=text",
     "fix": "eslint --cache --fix --ignore-path .gitignore .",
     "lint": "eslint --cache -f node_modules/eslint-formatter-pretty --ignore-path .gitignore .",
     "start": "node src",
-    "prepublish": "nsp check",
+    "prepublishOnly": "nsp check",
     "pretest": "yarn run lint",
     "test": "exit 0",
-    "posttest": "assert-version-bump && bin/assert-release-note"
+    "posttest": "assert-version-bump && bin/assert-changelog-update"
   },
   "dependencies": {
     "common-tags": "^1.4.0",

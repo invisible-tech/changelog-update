@@ -1,11 +1,11 @@
 'use strict'
 
-const assertReleaseNote = require('./assertReleaseNote')
-const pushReleaseNote = require('./pushReleaseNote')
-const { lastChangelogAdditions } = require('./helpers')
+const assertChangelogUpdate = require('./assertChangelogUpdate')
+const pushChangelogUpdate = require('./pushChangelogUpdate')
+const { lastChangelogUpdate } = require('./helpers')
 
 module.exports = {
-  assertReleaseNote,
-  lastChangelogAdditions,
-  pushReleaseNote,
+  assertChangelogUpdate,
+  lastChangelogUpdate,
+  pushChangelogUpdate,
 }
