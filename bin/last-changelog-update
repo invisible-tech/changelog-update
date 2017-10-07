@@ -2,13 +2,14 @@
 
 'use strict'
 
-const finder = require('find-package-json')
 const { get } = require('lodash/fp')
 
 const { CHANGELOG_FILE } = require('../src/constants')
-const { lastChangelogUpdate } = require('../src/helpers')
+const {
+  getArgumentsWithDefaults,
+  lastChangelogUpdate,
+} = require('../src/helpers')
 
-const pkg = finder().next().value || {}
-const changelogFile = get('ChangelogUpdate.changelogFile')(pkg) || CHANGELOG_FILE
+const { changelogFile } = getArgumentsWithDefaults()
 
 console.log(lastChangelogUpdate({ changelogFile }))

@@ -1,6 +1,11 @@
 dependencies:
+  pre:
+    # Install yarn
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
   override:
     - yarn
+  cache_directories:
+    - ~/.cache/yarn
 
 machine:
   environment:
@@ -9,8 +14,6 @@ machine:
 
   node:
     version: "8.5.0"
-
-  timezone: America/Los_Angeles
 
 test:
   override:
