@@ -117,9 +117,9 @@ If using Circle CI, add `push-changelog-update` to the `deployment` section of y
 
     ```JSON
       "changelogUpdate": {
-        "slackbotName": "Changelog Robot", // defaults to project name
-        "iconEmoji": "joy", // defaults to :robot_face:
-        "changelogFile: "CHANGELOG" // defaults to CHANGELOG.md
+        "slackbotName": "Changelog Robot",
+        "iconEmoji": "joy",
+        "changelogFile: "CHANGELOG"
       }
     ```
 
