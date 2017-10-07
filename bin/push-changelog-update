@@ -2,28 +2,13 @@
 
 'use strict'
 
-const finder = require('find-package-json')
 const { get } = require('lodash/fp')
 const { stripIndents } = require('common-tags')
 
 const pushChangelogUpdate = require('../src/pushChangelogUpdate')
-const {
-  CHANGELOG_FILE,
-  ICON_EMOJI,
-  SLACKBOT_NAME,
-} = require('../src/constants')
+const { getArgumentsWithDefaults } = require('../src/helpers')
 
-const pkg = finder().next().value || {}
-const {
-  changelogUpdate: {
-    changelogFile = CHANGELOG_FILE,
-    iconEmoji = ICON_EMOJI,
-  } = {},
-} = pkg
-
-const slackbotName = get('changelogUpdate.slackbotName')(pkg) ||
-  get('name')(pkg) ||
-  SLACKBOT_NAME
+const { changelogFile, iconEmoji, slackbotName } = getArgumentsWithDefaults()
 
 try {
   const dotenv = require('dotenv')

@@ -2,21 +2,20 @@
 
 'use strict'
 
-const finder = require('find-package-json')
 const { get } = require('lodash/fp')
 
 const assertChangelogUpdate = require('../src/assertChangelogUpdate')
-const { lastChangelogUpdate } = require('../src/helpers')
-const { CHANGELOG_FILE } = require('../src/constants')
+const {
+  lastChangelogUpdate,
+  getArgumentsWithDefaults,
+} = require('../src/helpers')
 
-const pkg = finder().next().value || {}
-
-const changelogFile = get('ChangelogUpdate.changelogFile')(pkg) || CHANGELOG_FILE
+const { changelogFile } = getArgumentsWithDefaults()
 
 try {
   assertChangelogUpdate({ changelogFile })
   const isQuiet = (process.argv[2] && (process.argv[2] === '-q' || process.argv[2] === '--quiet'))
-  if (! isQuiet) console.log(`Changelog update found\n${lastChangelogUpdate()}`)
+  if (! isQuiet) console.log(`Changelog update found\n${lastChangelogUpdate({ changelogFile })}`)
   process.exit(0)
 } catch (err) {
   console.error(err)

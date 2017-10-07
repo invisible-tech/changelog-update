@@ -1,9 +1,11 @@
 'use strict'
 
 const spawn = require('cross-spawn')
+const finder = require('find-package-json')
 const {
   filter,
   flow,
+  get,
   join,
   last,
   map,
@@ -15,7 +17,11 @@ const {
   trimCharsStart,
 } = require('lodash/fp')
 
-const { CHANGELOG_FILE } = require('../constants')
+const {
+  CHANGELOG_FILE,
+  ICON_EMOJI,
+  SLACKBOT_NAME,
+} = require('../constants')
 
 const MASTER = 'master'
 
@@ -30,23 +36,23 @@ const getAdditions = flow(
   trim,
 )
 
-const currentBranch = () =>
-  spawn.sync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { encoding: 'utf8' }).stdout
+const currentBranch = () => {
+  const { stdout: branch } = spawn.sync(
+    'git',
+    ['rev-parse', '--abbrev-ref', 'HEAD'],
+    { encoding: 'utf8' }
+  )
+  return trim(branch)
+}
 
 const lastMergeHash = () => {
   const { stdout: mergeHashes } = spawn.sync(
     'git',
-    [
-      '--no-pager',
-      'log',
-      '--merges',
-      '-2',
-      '--pretty=format:%h',
-    ],
+    ['--no-pager', 'log', '--merges', '-2', '--pretty=format:%h'],
     { encoding: 'utf8' }
   )
 
-  return last(split('\n')(mergeHashes))
+  return trim(last(split('\n')(mergeHashes)))
 }
 
 const changelogCommitHash = () =>
@@ -70,6 +76,23 @@ const lastChangelogUpdate = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}
   return getAdditions(diff)
 }
 
+const getArgumentsWithDefaults = () => {
+  const pkg = finder().next().value || {}
+  const {
+    changelogUpdate: {
+      changelogFile = CHANGELOG_FILE,
+      iconEmoji = ICON_EMOJI,
+    } = {},
+  } = pkg
+
+  const slackbotName = get('changelogUpdate.slackbotName')(pkg) ||
+    get('name')(pkg) ||
+    SLACKBOT_NAME
+
+  return { changelogFile, iconEmoji, slackbotName }
+}
+
 module.exports = {
+  getArgumentsWithDefaults,
   lastChangelogUpdate,
 }
