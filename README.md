@@ -119,7 +119,7 @@ If using Circle CI, add `push-changelog-update` to the `deployment` section of y
       "changelogUpdate": {
         "slackbotName": "Changelog Robot",
         "iconEmoji": "joy",
-        "changelogFile: "CHANGELOG"
+        "changelogFile": "CHANGELOG"
       }
     ```
 
