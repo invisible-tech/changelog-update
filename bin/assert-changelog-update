@@ -2,8 +2,6 @@
 
 'use strict'
 
-const { get } = require('lodash/fp')
-
 const assertChangelogUpdate = require('../src/assertChangelogUpdate')
 const {
   lastChangelogUpdate,
