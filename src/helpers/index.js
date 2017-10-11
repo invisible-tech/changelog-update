@@ -20,10 +20,12 @@ const {
 const {
   CHANGELOG_FILE,
   ICON_EMOJI,
+  MASTER,
+  ORIGIN_MASTER,
   SLACKBOT_NAME,
 } = require('../constants')
 
-const MASTER = 'master'
+const pkg = finder().next().value || {}
 
 const getAdditions = flow(
   split('\n'),
@@ -55,8 +57,11 @@ const lastMergeHash = () => {
   return trim(last(split('\n')(mergeHashes)))
 }
 
-const changelogCommitHash = () =>
-  (currentBranch() === MASTER ? lastMergeHash() : MASTER)
+const changelogCommitHash = () => {
+  const master = get('changelogUpdate.masterBranch')(pkg) || MASTER
+  const remoteMaster = get('changelogUpdate.remoteMasterBranch')(pkg) || ORIGIN_MASTER
+  return (currentBranch() === master) ? lastMergeHash() : remoteMaster
+}
 
 const lastChangelogUpdate = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}) => {
   const { stdout: diff } = spawn.sync(
@@ -77,7 +82,6 @@ const lastChangelogUpdate = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}
 }
 
 const getArgumentsWithDefaults = () => {
-  const pkg = finder().next().value || {}
   const {
     changelogUpdate: {
       changelogFile = CHANGELOG_FILE,
