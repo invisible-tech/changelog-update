@@ -2,8 +2,6 @@
 
 'use strict'
 
-const { get } = require('lodash/fp')
-
 const assertChangelogUpdate = require('../src/assertChangelogUpdate')
 const {
   lastChangelogUpdate,
@@ -18,6 +16,6 @@ try {
   if (! isQuiet) console.log(`Changelog update found\n${lastChangelogUpdate({ changelogFile })}`)
   process.exit(0)
 } catch (err) {
-  console.error(err)
+  console.error(err.message)
   process.exit(1)
 }

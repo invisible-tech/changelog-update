@@ -2,7 +2,6 @@
 
 'use strict'
 
-const { get } = require('lodash/fp')
 const { stripIndents } = require('common-tags')
 
 const pushChangelogUpdate = require('../src/pushChangelogUpdate')

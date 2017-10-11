@@ -2,9 +2,6 @@
 
 'use strict'
 
-const { get } = require('lodash/fp')
-
-const { CHANGELOG_FILE } = require('../src/constants')
 const {
   getArgumentsWithDefaults,
   lastChangelogUpdate,
