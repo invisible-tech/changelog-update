@@ -86,6 +86,8 @@ const getArgumentsWithDefaults = () => {
     changelogUpdate: {
       changelogFile = CHANGELOG_FILE,
       iconEmoji = ICON_EMOJI,
+      masterBranch = MASTER,
+      remoteMasterBranch = ORIGIN_MASTER,
     } = {},
   } = pkg
 
@@ -93,7 +95,7 @@ const getArgumentsWithDefaults = () => {
     get('name')(pkg) ||
     SLACKBOT_NAME
 
-  return { changelogFile, iconEmoji, slackbotName }
+  return { changelogFile, iconEmoji, slackbotName, masterBranch, remoteMasterBranch }
 }
 
 module.exports = {
