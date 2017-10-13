@@ -58,9 +58,8 @@ const lastMergeHash = () => {
 }
 
 const changelogCommitHash = () => {
-  const master = get('changelogUpdate.masterBranch')(pkg) || MASTER
-  const remoteMaster = get('changelogUpdate.remoteMasterBranch')(pkg) || ORIGIN_MASTER
-  return (currentBranch() === master) ? lastMergeHash() : remoteMaster
+  const { masterBranch, remoteMasterBranch } = getArgumentsWithDefaults()
+  return (currentBranch() === masterBranch) ? lastMergeHash() : remoteMasterBranch
 }
 
 const lastChangelogUpdate = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}) => {
@@ -95,7 +94,13 @@ const getArgumentsWithDefaults = () => {
     get('name')(pkg) ||
     SLACKBOT_NAME
 
-  return { changelogFile, iconEmoji, slackbotName, masterBranch, remoteMasterBranch }
+  return {
+    changelogFile,
+    iconEmoji,
+    masterBranch,
+    remoteMasterBranch,
+    slackbotName,
+  }
 }
 
 module.exports = {
