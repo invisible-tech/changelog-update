@@ -20,10 +20,12 @@ const {
 const {
   CHANGELOG_FILE,
   ICON_EMOJI,
+  MASTER,
+  ORIGIN_MASTER,
   SLACKBOT_NAME,
 } = require('../constants')
 
-const MASTER = 'master'
+const pkg = finder().next().value || {}
 
 const getAdditions = flow(
   split('\n'),
@@ -55,8 +57,10 @@ const lastMergeHash = () => {
   return trim(last(split('\n')(mergeHashes)))
 }
 
-const changelogCommitHash = () =>
-  (currentBranch() === MASTER ? lastMergeHash() : MASTER)
+const changelogCommitHash = () => {
+  const { masterBranch, remoteMasterBranch } = getArgumentsWithDefaults()
+  return (currentBranch() === masterBranch) ? lastMergeHash() : remoteMasterBranch
+}
 
 const lastChangelogUpdate = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}) => {
   const { stdout: diff } = spawn.sync(
@@ -77,11 +81,12 @@ const lastChangelogUpdate = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}
 }
 
 const getArgumentsWithDefaults = () => {
-  const pkg = finder().next().value || {}
   const {
     changelogUpdate: {
       changelogFile = CHANGELOG_FILE,
       iconEmoji = ICON_EMOJI,
+      masterBranch = MASTER,
+      remoteMasterBranch = ORIGIN_MASTER,
     } = {},
   } = pkg
 
@@ -89,7 +94,13 @@ const getArgumentsWithDefaults = () => {
     get('name')(pkg) ||
     SLACKBOT_NAME
 
-  return { changelogFile, iconEmoji, slackbotName }
+  return {
+    changelogFile,
+    iconEmoji,
+    masterBranch,
+    remoteMasterBranch,
+    slackbotName,
+  }
 }
 
 module.exports = {
