@@ -1,3 +1,5 @@
+# This package is deprecated and will no longer be maintained. Use [`@invisible/changelog-update`](https://www.npmjs.com/package/@invisible/changelog-update) instead.
+
 # @invisible/release-note
 
 [![CircleCI](https://circleci.com/gh/invisible-tech/release-note/tree/master.svg?style=svg)](https://circleci.com/gh/invisible-tech/release-note/tree/master)
