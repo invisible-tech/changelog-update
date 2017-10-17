@@ -1,7 +1,7 @@
 {
   "name": "@invisible/release-note",
   "license": "MIT",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Publish Release Notes to Slack seamlessly",
   "engines": {
     "node": "^8.5.0"
