@@ -1,10 +1,10 @@
 {
   "name": "@invisible/changelog-update",
   "license": "MIT",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Ensure updates to your changelog, and push them to Slack seamlessly",
   "engines": {
-    "node": "^8.5.0"
+    "node": "^9.0.0"
   },
   "homepage": "https://github.com/invisible-tech/changelog-update",
   "author": {
