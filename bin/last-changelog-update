@@ -2,10 +2,8 @@
 
 'use strict'
 
-const {
-  getArgumentsWithDefaults,
-  lastChangelogUpdate,
-} = require('../src/helpers')
+const lastChangelogUpdate = require('../src/lastChangelogUpdate')
+const { getArgumentsWithDefaults } = require('../src/helpers')
 
 const { changelogFile } = getArgumentsWithDefaults()
 
