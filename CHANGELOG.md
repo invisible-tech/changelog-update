@@ -2,6 +2,10 @@
 
 > All notable changes to this project will be documented in this file.
 
+## [1.0.9] - 2017-11-08
+### Fix
+  - The main file and expose lastChangelogUpdate.
+
 ## [1.0.8] - 2017-10-11
 ### Added
   - Allow user to customize master branch and remote master branch, default to `origin/master`
@@ -40,3 +44,4 @@
 [1.0.6]: https://github.com/invisible-tech/changelog-update/compare/v1.0.5...v1.0.6
 [1.0.7]: https://github.com/invisible-tech/changelog-update/compare/v1.0.6...v1.0.7
 [1.0.8]: https://github.com/invisible-tech/changelog-update/compare/v1.0.7...v1.0.8
+[1.0.9]: https://github.com/invisible-tech/changelog-update/compare/v1.0.8...v1.0.9
