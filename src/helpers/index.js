@@ -106,5 +106,6 @@ const getArgumentsWithDefaults = () => {
 module.exports = {
   getArgumentsWithDefaults,
   changelogCommitHash,
+  currentBranch,
   lastChangelogUpdate,
 }
