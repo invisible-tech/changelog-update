@@ -101,8 +101,9 @@ npm install -D @invisible/changelog-update
 
   You can also run it at any time from your CLI.
 
-  ```
+  ```bash
   $ push-changelog-update
+  $ push-changelog-update --strict # will silently succeed, but, output error if no changelog found without stopping the execution.
   ```
 
 2. To ensure that `assert-changelog-update` is run properly, make your `test` section in `circle.yml` look like this:
