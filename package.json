@@ -1,7 +1,7 @@
 {
   "name": "@invisible/changelog-update",
   "license": "MIT",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Ensure updates to your changelog, and push them to Slack seamlessly",
   "engines": {
     "node": "^8.5.0"
@@ -55,7 +55,8 @@
     "cross-spawn": "^5.1.0",
     "find-package-json": "^1.0.0",
     "got": "^7.1.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "yargs": "^10.0.3"
   },
   "optionalDependencies": {
     "dotenv": "^4.0.0"

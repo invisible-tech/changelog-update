@@ -9,6 +9,16 @@ const { getArgumentsWithDefaults } = require('../src/helpers')
 
 const { changelogFile, iconEmoji, slackbotName } = getArgumentsWithDefaults()
 
+const { argv } = require('yargs')
+  .option('strict', {
+    boolean: true,
+    alias: 's',
+    default: true,
+  })
+  .version()
+  .help()
+  .wrap(null)
+
 try {
   const dotenv = require('dotenv')
   dotenv.config()
@@ -23,14 +33,17 @@ if (! webhookUrl) {
 }
 
 pushChangelogUpdate({ webhookUrl, changelogFile, iconEmoji, slackbotName }).then(
-  res => console.log(
+  res => ((argv.strict) ? undefined : console.log(
     stripIndents`
       changelog-update:
       STATUS: ${res.statusCode}
       HEADERS: ${JSON.stringify(res.headers)}
     `
-  )
-).catch(err => {
-  console.error(err)
-  process.exit(1)
-})
+  ))
+).catch(
+  err => {
+    console.error(err)
+    if (argv.strict) process.exit(0)
+    process.exit(1)
+  }
+)
