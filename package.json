@@ -47,7 +47,8 @@
     "start": "node src",
     "prepublishOnly": "nsp check",
     "pretest": "yarn run lint",
-    "test": "exit 0",
+    "test": "yarn run test-only",
+    "test-only": "exit 0",
     "posttest": "assert-version-bump && bin/assert-changelog-update --quiet"
   },
   "dependencies": {

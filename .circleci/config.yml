@@ -33,7 +33,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run:
-          name: Lint TypeScript code
+          name: Lint js code
           command: yarn lint
 
   test:
@@ -45,7 +45,7 @@ jobs:
           at: ~/project
       - run:
           name: Run Tests
-          command: yarn test
+          command: yarn test-only
 
   publish:
     working_directory: ~/project
