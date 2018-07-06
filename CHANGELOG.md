@@ -2,6 +2,10 @@
 
 > All notable changes to this project will be documented in this file.
 
+*1.1.2*
+_Chore: Updated dependencies_
+
+
 ## [1.1.0] - 2017-11-10
 ### Feat
   - Add a `strict` flag to `push-changelog-update` that will silently succeed, but, output error if no changelog found without stopping the execution.
