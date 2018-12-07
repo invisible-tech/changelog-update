@@ -4,7 +4,7 @@
   "version": "1.1.2",
   "description": "Ensure updates to your changelog, and push them to Slack seamlessly",
   "engines": {
-    "node": "^8.11.2"
+    "node": ">=8.11.2"
   },
   "homepage": "https://github.com/invisible-tech/changelog-update",
   "author": {
