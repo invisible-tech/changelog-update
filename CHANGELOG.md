@@ -2,6 +2,11 @@
 
 > All notable changes to this project will be documented in this file.
 
+## [1.1.3] - 2018-12-06
+### Chore
+  - Set node version to >=8 so that node 10+ can use it
+  - updated dependencies
+
 *1.1.2*
 _Chore: Updated dependencies_
 
