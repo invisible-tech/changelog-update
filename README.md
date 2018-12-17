@@ -96,7 +96,7 @@ npm install -D @invisible/changelog-update
           - push-changelog-update
   ```
 
-  Add the `CHANGELOG_WEBHOOK_URL` env variable to your project too.
+  Add the `CHANGELOG_WEBHOOK_URL` env variable to your project too. This can be either a Slack or Discord webhook (currently).
   This package will optionally load `dotenv` if it's present, so you may add this to your `.env` file as well.
 
   You can also run it at any time from your CLI.
