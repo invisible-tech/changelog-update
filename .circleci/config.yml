@@ -9,7 +9,6 @@ jobs:
       - restore_cache:
           keys:
           - v2-dependencies-{{ checksum "yarn.lock" }}
-          - v2-dependencies-
       - run:
           name: Install Dependencies
           command: ls && yarn install
@@ -33,7 +32,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run:
-          name: Lint TypeScript code
+          name: Lint js code
           command: yarn lint
 
   test:
@@ -45,7 +44,7 @@ jobs:
           at: ~/project
       - run:
           name: Run Tests
-          command: yarn test
+          command: yarn test-only
 
   publish:
     working_directory: ~/project
@@ -56,6 +55,9 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project
+      - run:
+          name: Publish NPM Package
+          command: ./node_modules/.bin/publish
       - run:
           name: Publish Changelog
           command: ./node_modules/.bin/push-changelog-update || true
