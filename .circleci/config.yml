@@ -8,14 +8,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v2-dependencies-{{ checksum "yarn.lock" }}
+          - v2-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Install Dependencies
-          command: ls && yarn install
+          command: ls && npm install
       - save_cache:
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "yarn.lock" }}
+          key: v2-dependencies-{{ checksum "package-lock.json" }}
       - persist_to_workspace:
           root: .
           paths:
@@ -33,7 +33,7 @@ jobs:
           at: ~/project
       - run:
           name: Lint js code
-          command: yarn lint
+          command: npm run lint
 
   test:
     working_directory: ~/project
@@ -44,7 +44,7 @@ jobs:
           at: ~/project
       - run:
           name: Run Tests
-          command: yarn test-only
+          command: npm run test-only
 
   publish:
     working_directory: ~/project

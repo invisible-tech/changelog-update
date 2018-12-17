@@ -4,7 +4,8 @@
   "version": "1.2.1",
   "description": "Ensure updates to your changelog, and push them to Slack seamlessly",
   "engines": {
-    "node": ">=8.11.2"
+    "node": ">=8.11.2",
+    "npm": ">=6.0.0"
   },
   "homepage": "https://github.com/invisible-tech/changelog-update",
   "author": {
@@ -33,10 +34,8 @@
     "jsdoc": "^3.4.3",
     "mocha": "^5.0.0",
     "mock-require": "^3.0.0",
-    "nsp": "^3.0.0",
     "nyc": "^12",
-    "recursive-readdir": "^2.1.1",
-    "yarn": "^1"
+    "recursive-readdir": "^2.1.1"
   },
   "repository": "git@github.com:invisible-tech/changelog-update.git",
   "scripts": {
@@ -45,9 +44,9 @@
     "fix": "eslint --cache --fix --ignore-path .gitignore .",
     "lint": "eslint --cache -f node_modules/eslint-formatter-pretty --ignore-path .gitignore .",
     "start": "node src",
-    "prepublishOnly": "nsp check",
-    "pretest": "yarn run lint",
-    "test": "yarn run test-only",
+    "prepublishOnly": "npm audit",
+    "pretest": "npm run lint",
+    "test": "npm run test-only",
     "test-only": "exit 0",
     "posttest": "assert-version-bump && bin/assert-changelog-update --quiet"
   },
