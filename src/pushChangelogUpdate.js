@@ -4,7 +4,9 @@
 
 const assert = require('assert')
 const got = require('got')
+const { stripIndents } = require('common-tags')
 const {
+  includes,
   toLower,
   trimChars,
 } = require('lodash/fp')
@@ -33,13 +35,12 @@ const postToWebhook = async ({ payload, webhookUrl }) => {
 
 const normalizeEmoji = str => `:${trimChars(':')(toLower(str))}:`
 
-const run = async ({
+const postToSlack = async ({
   changelogFile = CHANGELOG_FILE,
   iconEmoji = ICON_EMOJI,
   slackbotName = SLACKBOT_NAME,
   webhookUrl,
 } = {}) => {
-  assert(webhookUrl, 'changelog-update: no webhook url given')
   const text = lastChangelogUpdate({ changelogFile })
   const payload = JSON.stringify({
     icon_emoji: normalizeEmoji(iconEmoji),
@@ -47,6 +48,49 @@ const run = async ({
     username: slackbotName,
   })
   return postToWebhook({ payload, webhookUrl })
+}
+
+const postToDiscord = async ({
+  changelogFile = CHANGELOG_FILE,
+  iconEmoji = ICON_EMOJI,
+  slackbotName = SLACKBOT_NAME,
+  webhookUrl,
+} = {}) => {
+  const text = lastChangelogUpdate({ changelogFile })
+  const payload = JSON.stringify({
+    content: stripIndents`
+      ${normalizeEmoji(iconEmoji)}
+      ${text}
+    `,
+    username: slackbotName,
+  })
+  return postToWebhook({ payload, webhookUrl })
+}
+
+const run = async ({
+  changelogFile = CHANGELOG_FILE,
+  iconEmoji = ICON_EMOJI,
+  slackbotName = SLACKBOT_NAME,
+  webhookUrl,
+}) => {
+  assert(webhookUrl, 'changelog-update: no webhook url given')
+  if (includes('slack')(process.env.CHANGELOG_WEBHOOK_URL)) {
+    return postToSlack({
+      changelogFile,
+      iconEmoji,
+      slackbotName,
+      webhookUrl,
+    })
+  }
+
+  if (includes('discord')(process.env.CHANGELOG_WEBHOOK_URL)) {
+    return postToDiscord({
+      changelogFile,
+      iconEmoji,
+      slackbotName,
+      webhookUrl,
+    })
+  }
 }
 
 module.exports = run

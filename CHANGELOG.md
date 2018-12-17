@@ -2,14 +2,18 @@
 
 > All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2018-12-17
+### Feature
+  - Add discord webhook support
+
 ## [1.1.3] - 2018-12-06
 ### Chore
   - Set node version to >=8 so that node 10+ can use it
   - updated dependencies
 
-*1.1.2*
-_Chore: Updated dependencies_
-
+## [1.1.2] - 2017-11-11
+### Chore
+  - Updated dependencies
 
 ## [1.1.0] - 2017-11-10
 ### Feat
@@ -59,3 +63,6 @@ _Chore: Updated dependencies_
 [1.0.8]: https://github.com/invisible-tech/changelog-update/compare/v1.0.7...v1.0.8
 [1.0.9]: https://github.com/invisible-tech/changelog-update/compare/v1.0.8...v1.0.9
 [1.1.0]: https://github.com/invisible-tech/changelog-update/compare/v1.0.9...v1.1.0
+[1.1.2]: https://github.com/invisible-tech/changelog-update/compare/v1.1.0...v1.2.0
+[1.1.3]: https://github.com/invisible-tech/changelog-update/compare/v1.1.2...v1.1.3
+[1.2.0]: https://github.com/invisible-tech/changelog-update/compare/v1.1.3...v1.2.0
