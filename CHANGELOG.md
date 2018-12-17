@@ -2,6 +2,10 @@
 
 > All notable changes to this project will be documented in this file.
 
+## [1.2.2] - 2018-12-17
+### Internal
+  - Migrated to npm from yarn
+
 ## [1.2.1] - 2018-12-17
 ### Internal
   - Updated CircleCI to version 2
