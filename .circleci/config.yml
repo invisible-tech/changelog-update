@@ -60,7 +60,7 @@ jobs:
           command: ./node_modules/.bin/publish
       - run:
           name: Publish Changelog
-          command: ./node_modules/.bin/push-changelog-update || true
+          command: ./bin/push-changelog-update || true
 
 workflows:
   version: 2
