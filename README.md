@@ -108,6 +108,7 @@ npm install -D @invisible/changelog-update
   ```bash
   $ push-changelog-update
   $ push-changelog-update --strict # will silently succeed, but, output error if no changelog found without stopping the execution.
+  $ push-changelog-update --generate # will generate a changelog based on commit messages.
   ```
 
 2. To ensure that `assert-changelog-update` is run properly, make your `test` section in `circle.yml` look like this:
