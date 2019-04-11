@@ -15,6 +15,7 @@
   },
   "bin": {
     "assert-changelog-update": "bin/assert-changelog-update",
+    "generate-changelog": "bin/generate-changelog",
     "last-changelog-update": "bin/last-changelog-update",
     "push-changelog-update": "bin/push-changelog-update"
   },

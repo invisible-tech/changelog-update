@@ -80,6 +80,19 @@ const lastChangelogUpdate = ({ changelogFile = CHANGELOG_FILE, commitHash } = {}
   return getAdditions(diff)
 }
 
+const generateChangelog = ({ commitHash } = {}) => {
+  const { stdout: log } = spawn.sync(
+    'git',
+    [
+      'log',
+      '--pretty=format:%B',
+      `${commitHash || changelogCommitHash()}..HEAD`,
+    ],
+    { encoding: 'utf8' }
+  )
+  return log
+}
+
 const getArgumentsWithDefaults = () => {
   const {
     changelogUpdate: {
@@ -104,6 +117,7 @@ const getArgumentsWithDefaults = () => {
 }
 
 module.exports = {
+  generateChangelog,
   getArgumentsWithDefaults,
   changelogCommitHash,
   currentBranch,
