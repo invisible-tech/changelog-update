@@ -16,6 +16,10 @@ Provides three helper methods to publish the latest additions to your changelog.
 
     Logs the latest changelog additions to stdout. If you are on `master`, looks at the diff from two merges ago. If you are not on `master`, looks at the diff between `master` and `HEAD`
 
+3. `generate-changelog`
+
+    Logs the latest commits to stdout. If you are on `master`, looks at the log from two merges ago. If you are not on `master`, looks at the log between `master` and `HEAD`.
+
 ## Install
 
 1. Install the package as devDependency:
@@ -104,6 +108,7 @@ npm install -D @invisible/changelog-update
   ```bash
   $ push-changelog-update
   $ push-changelog-update --strict # will silently succeed, but, output error if no changelog found without stopping the execution.
+  $ push-changelog-update --generate # will generate a changelog based on commit messages.
   ```
 
 2. To ensure that `assert-changelog-update` is run properly, make your `test` section in `circle.yml` look like this:

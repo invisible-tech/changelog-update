@@ -2,6 +2,10 @@
 
 > All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2019-04-11
+### Feature
+  - Add automatic changelog generation based on commit messages.
+
 ## [1.2.2] - 2018-12-17
 ### Internal
   - Migrated to npm from yarn

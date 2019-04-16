@@ -2,6 +2,7 @@
 
 'use strict'
 
+const yargs = require('yargs')
 const { stripIndents } = require('common-tags')
 
 const pushChangelogUpdate = require('../src/pushChangelogUpdate')
@@ -9,11 +10,16 @@ const { getArgumentsWithDefaults } = require('../src/helpers')
 
 const { changelogFile, iconEmoji, slackbotName } = getArgumentsWithDefaults()
 
-const { argv } = require('yargs')
+const { argv } = yargs
   .option('strict', {
     boolean: true,
     alias: 's',
     default: true,
+  })
+  .option('generate', {
+    boolean: true,
+    alias: 'g',
+    default: false,
   })
   .version()
   .help()
@@ -32,8 +38,10 @@ if (! webhookUrl) {
   process.exit(1)
 }
 
-pushChangelogUpdate({ webhookUrl, changelogFile, iconEmoji, slackbotName }).then(
-  res => ((argv.strict) ? undefined : console.log(
+const { strict, generate } = argv
+
+pushChangelogUpdate({ webhookUrl, changelogFile, iconEmoji, slackbotName, generate }).then(
+  res => ((strict) ? undefined : console.log(
     stripIndents`
       changelog-update:
       STATUS: ${res.statusCode}
